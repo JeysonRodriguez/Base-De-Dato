@@ -1,0 +1,86 @@
+-- Crea la base de datos
+CREATE DATABASE Videojuegos;
+
+-- Usar la base de datos
+USE Videojuegos;
+
+-- Crea la tabla Géneros
+CREATE TABLE Generos (
+    ID INT PRIMARY KEY,
+    Nombre VARCHAR(50)
+);
+
+-- Crea la tabla EstudiosDesarrollo
+CREATE TABLE EstudiosDesarrollo (
+    ID INT PRIMARY KEY,
+    Nombre VARCHAR(100),
+    Fundación DATE,
+    Sede VARCHAR(100)
+);
+
+-- Crea la tabla Juegos
+CREATE TABLE Juegos (
+    ID INT PRIMARY KEY,
+    Nombre VARCHAR(255),
+    Plataforma VARCHAR(50),
+    Desarrolladora VARCHAR(100),
+    FechaLanzamiento DATE,
+    GeneroID INT,
+    FOREIGN KEY (GeneroID) REFERENCES Generos(ID)
+);
+
+-- Crea la tabla Jugadores
+CREATE TABLE Jugadores (
+    ID INT PRIMARY KEY,
+    Nombre VARCHAR(255),
+    Edad INT,
+    CorreoElectronico VARCHAR(100)
+);
+
+-- Crea la tabla Reseñas (corregido el nombre)
+CREATE TABLE Reseñas (
+    ID INT PRIMARY KEY,
+    JuegoID INT,
+    JugadorID INT,
+    Calificación INT,
+    Comentario TEXT,
+    FechaReseña DATE,
+    EstudioDesarrolloID INT,
+    FOREIGN KEY (JuegoID) REFERENCES Juegos(ID),
+    FOREIGN KEY (JugadorID) REFERENCES Jugadores(ID),
+    FOREIGN KEY (EstudioDesarrolloID) REFERENCES EstudiosDesarrollo(ID)
+);
+
+-- Inserta datos en la tabla Generos
+INSERT INTO Generos (ID, Nombre) VALUES
+    (1, 'Acción'),
+    (2, 'Aventura'),
+    (3, 'Estrategia'),
+    (4, 'Deportes');
+
+-- Inserta datos en la tabla EstudiosDesarrollo
+INSERT INTO EstudiosDesarrollo (ID, Nombre, Fundación, Sede) VALUES
+    (1, 'DesarrolladoraXYZ', '1990-05-15', 'Ciudad ABC'),
+    (2, 'EstudioABC', '2000-10-20', 'Ciudad XYZ'),
+    (3, 'OtroEstudio', '1985-03-12', 'Ciudad PQR');
+
+-- Insertar datos en la tabla Jugadores
+INSERT INTO Jugadores (ID, Nombre, Edad, CorreoElectronico) VALUES
+    (1, 'Juan Pérez', 25, 'juan@example.com'),
+    (2, 'María García', 30, 'maria@example.com'),
+    (3, 'Pedro López', 28, 'pedro@example.com');
+
+-- Inserta datos en la tabla Juegos
+INSERT INTO Juegos (ID, Nombre, Plataforma, Desarrolladora, FechaLanzamiento, GeneroID) VALUES
+    (1, 'Juego1', 'PS5', 'DesarrolladoraXYZ', '2023-01-01', 1),
+    (2, 'Juego2', 'Xbox Series X', 'EstudioABC', '2022-11-15', 2),
+    (3, 'Juego3', 'PC', 'OtroEstudio', '2023-03-20', 3);
+
+-- Inserta datos en la tabla Reseñas
+INSERT INTO Reseñas (ID, JuegoID, JugadorID, Calificación, Comentario, FechaReseña, EstudioDesarrolloID) VALUES
+    (1, 1, 1, 4, 'Me gustó mucho este juego', '2023-01-10', 1),
+    (2, 2, 2, 5, '¡Increíble! El mejor juego que he jugado', '2022-11-20', 2),
+    (3, 3, 3, 3, 'Estuvo bien, pero podría mejorar', '2023-03-25', 3);
+
+
+
